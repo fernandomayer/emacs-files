@@ -7,3 +7,11 @@ available to many other platforms.
 
 Emacs is my editor of choice because I can customize it the way I want,
 thanks to the Emacs Lisp, a dialect from the Lisp language.
+
+Many programs like LaTeX, R, and tha Linux shell can be run inside
+Emacs, and make use of all of its power. You can even make [coffee with
+Emacs](http://www.emacswiki.org/emacs/CoffeeMode)!!!
+
+This repository contains a `.emacs' written in Emacs Lisp, with all the
+configuration I use. More information can be found in the comments
+inside it.
