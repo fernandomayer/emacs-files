@@ -149,7 +149,9 @@
 ;; ess and R related customizations
 ;;======================================================================
 
-;; calls ess
+;; calls ess. See
+;; http://ess.r-project.org/
+(load "~/.emacs.d/ess-12.03/lisp/ess-site")
 (require 'ess-site)
 
 ;; show function arguments in ESS buffers
@@ -159,6 +161,8 @@
 
 ;; turns on yas/minor-mode in ESS buffers (requires yasnippet installed)
 ;; see http://capitaomorte.github.com/yasnippet/faq.html
+;; if it doesn't work, use
+;; M-x yas/minor-mode
 (add-hook 'ess-mode-hook 'yas/minor-mode-on)
 ;(require 'yasnippet)
 
