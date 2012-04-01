@@ -1,12 +1,12 @@
-;;----------------------------------------------------------------------
+;;======================================================================
 ;; emacs customization file
 ;; author: Fernando Mayer
-;; last modified: 2012-03-22
-;;----------------------------------------------------------------------
+;; last modified: 2012-04-01
+;;======================================================================
 
-;;----------------------------------------------------------------------
+;;======================================================================
 ;; general or global customizations
-;;----------------------------------------------------------------------
+;;======================================================================
 
 ;; add ~/.emacs.d/ to the load-path
 (add-to-list 'load-path "~/.emacs.d/")
@@ -64,52 +64,57 @@
 	;; removes terminal bell (make it visible only)
 	'(visible-bell t))
 
+;;......................................................................
+;; DEFUNCT options
+;;......................................................................
+
+;; C-TAB move between buffers
+;(global-set-key [(control tab)] 'other-window)
+
+;; F2 as undo
+;(global-set-key [f2] 'undo)
+
+;; F6 kill buffers
+;(global-set-key [f6] 'kill-this-buffer)
+
+;; 4 spaces for tabs
+;(setq tab-width 4)
+
+;;......................................................................
+
+;;======================================================================
+;; colors customizations
+;;======================================================================
+
+;; color-theme.el is nedded, see
+;; http://www.emacswiki.org/emacs-en/ColorTheme
+;; In Debian based systems, install the package emacs-goodies-el
+(require 'color-theme)
+;; This is the color-theme-tangosoft, which require
+;; color-theme-tangosft.el in your ~/.emacs.d/ . See
+;; https://github.com/kjhealy/tangosoft-theme
+(load "~/.emacs.d/color-theme-tangosoft")
+(color-theme-tangosoft)
 
 ;;......................................................................
 ;; DEFUNCT options
 ;;......................................................................
 
-;; faz com que C-TAB alterne entre as janelas visiveis
-;(global-set-key [(control tab)] 'other-window)
-
-;; faz com que F2 seja a tecla para desfazer operacoes (undo)
-;(global-set-key [f2] 'undo)
-
-;; faz com que F6 mate o buffer atual
-;(global-set-key [f6] 'kill-this-buffer)
-
-;; muda o tamanho de um tab para 4 espacos
-;(setq tab-width 4)
-
-;;......................................................................
-
-;;----------------------------------------------------------------------
-;; colors customizations
-;;----------------------------------------------------------------------
-
-(require 'color-theme)
-(load "~/.emacs.d/color-theme-tangosoft")
-(color-theme-tangosoft)
-
 ;; sets background and foreground colors
 ;(set-background-color "black")
 ;(set-foreground-color "white")
 
-;;----------------------------------------------------------------------
+;;......................................................................
 
-;;----------------------------------------------------------------------
-;; LaTeX (and AucTeX) customizations
-;;----------------------------------------------------------------------
+;;======================================================================
+;; LaTeX (and AUCTeX) customizations
+;;======================================================================
 
 ;; make pdflatex default (instead of latex)
 (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
 
-;; (setq TeX-view
-;;       (quote
-;;        (("^pdf$" "." "evince -f %o"))))
-
 ;; run Sweave directly inside a .Rnw file
-;; http://kieranhealy.org/esk/starter-kit-stats.html
+;; ref: http://kieranhealy.org/esk/starter-kit-stats.html
 (add-to-list 'auto-mode-alist '("\\.Rnw\\'" . Rnw-mode))
 (add-to-list 'auto-mode-alist '("\\.Snw\\'" . Rnw-mode))
 ;; Make TeX and RefTex aware of Snw and Rnw files
@@ -128,35 +133,34 @@
                            TeX-run-TeX nil (latex-mode) :help "Run Latex after Sweave") t)
             (setq TeX-command-default "Sweave")))
 
-;;----------------------------------------------------------------------
-
-;;----------------------------------------------------------------------
+;;======================================================================
 ;; ess and R related customizations
-;;----------------------------------------------------------------------
+;;======================================================================
 
 ;; calls ess
 (require 'ess-site)
 
-;; show function arguments in [R] buffers
+;; show function arguments in ESS buffers
 (require 'ess-eldoc)
-; also show in *R* buffers
+; also show in iESS buffers
 (add-hook 'inferior-ess-mode-hook 'ess-use-eldoc)
 
-
+;; turns on yas/minor-mode in ESS buffers (requires yasnippet installed)
+;; see http://capitaomorte.github.com/yasnippet/faq.html
 (add-hook 'ess-mode-hook 'yas/minor-mode-on)
 ;(require 'yasnippet)
 
-
+;; uses the autocompletion of arguments from r-autoyas. Must have
+;; r-autoyas.el in ~/.emacs.d/
+;; see https://github.com/mlf176f2/r-autoyas.el
 (load "~/.emacs.d/r-autoyas")
 (require 'r-autoyas)
 (add-hook 'ess-mode-hook 'r-autoyas-ess-activate)
 
-
-
-
 ;; Recommended customizatios found in "R Internals" manual
 ;; http://cran.r-project.org/doc/manuals/R-ints.html#R-coding-standards
 ;;......................................................................
+
 ;; C code
 (add-hook 'c-mode-hook
 	  (lambda () (c-set-style "bsd")))
@@ -248,17 +252,16 @@ options(oo)})\n"  string) buf)
 (global-set-key (kbd "s-P") 'outline-previous-heading)
 (global-set-key (kbd "s-N") 'outline-next-heading) 
 
-
 ;;......................................................................
 ;; DEFUNCT options
 ;;......................................................................
 
-;; para usar o pacote colorout no emacs
+;; to use the colorout package in emacs
 ;(require 'ansi-color)
 ;(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;;......................................................................
 
-;;----------------------------------------------------------------------
+;;======================================================================
 ;; end of .emacs
-;;----------------------------------------------------------------------
+;;======================================================================
