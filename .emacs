@@ -107,6 +107,18 @@
 ;;......................................................................
 
 ;;======================================================================
+;; markdown mode
+;;======================================================================
+
+;; make markdown mode visible. Install from
+;; http://jblevins.org/projects/markdown-mode/
+;; or emacs-goodies-el in Debian based systems
+(setq auto-mode-alist
+   (cons '("\\.md" . markdown-mode) auto-mode-alist))
+;; NOTE: the .md file extension is not a consensus for markdown, so use
+;; here whatever extension you use for it (e.g. .text, .mdwn, ...)
+
+;;======================================================================
 ;; LaTeX (and AUCTeX) customizations
 ;;======================================================================
 
