@@ -1,0 +1,264 @@
+;;----------------------------------------------------------------------
+;; emacs customization file
+;; author: Fernando Mayer
+;; last modified: 2012-03-22
+;;----------------------------------------------------------------------
+
+;;----------------------------------------------------------------------
+;; general or global customizations
+;;----------------------------------------------------------------------
+
+;; add ~/.emacs.d/ to the load-path
+(add-to-list 'load-path "~/.emacs.d/")
+
+;; activate highlighting for the current line
+;; a list with possible colors is available with M-x list-colors-display
+;; ref: http://emacsblog.org/2007/04/09/highlight-the-current-line
+(global-hl-line-mode 1)
+;(set-face-background 'hl-line "#111")
+
+;; Show line-number and column-number in the mode line
+(line-number-mode 1)
+(column-number-mode 1)
+
+;; initiate with 2 vertical buffers
+(split-window-horizontally)
+
+;; break lines at specified column (<= 80, defaults 72)
+(setq-default fill-column 72)
+
+;; turns on auto-fill-mode to automatically break lines
+(setq-default auto-fill-function 'do-auto-fill)
+
+;; activates highlighting when selecting blocks of text
+(setq-default transient-mark-mode t)
+
+;; x-select-enable-clipboard makes copied text available from/for emacs
+;; buffers
+(setq x-select-enable-clipboard t)
+
+;; disable automatic backup copies (~)
+(setq make-backup-files nil)
+
+;; Automatic brackets, etc
+;; ref: http://www.emacswiki.org/emacs/ESSAutoParens
+;; enable skeleton-pair insert globally
+(setq skeleton-pair t)
+;;(setq skeleton-pair-on-word t)
+(global-set-key (kbd "(") 'skeleton-pair-insert-maybe)
+(global-set-key (kbd "[") 'skeleton-pair-insert-maybe)
+(global-set-key (kbd "{") 'skeleton-pair-insert-maybe)
+(global-set-key (kbd "\"") 'skeleton-pair-insert-maybe)
+(global-set-key (kbd "\'") 'skeleton-pair-insert-maybe)
+(global-set-key (kbd "\`") 'skeleton-pair-insert-maybe)
+(global-set-key (kbd "<") 'skeleton-pair-insert-maybe)
+
+;; custom variables
+(custom-set-variables
+	;; stop cursor blinking
+	'(blink-cursor-mode nil)
+	;; removes tool bar
+	'(tool-bar-mode nil)
+	;; mark matching brackets
+	'(show-paren-mode t)
+	;; removes terminal bell (make it visible only)
+	'(visible-bell t))
+
+
+;;......................................................................
+;; DEFUNCT options
+;;......................................................................
+
+;; faz com que C-TAB alterne entre as janelas visiveis
+;(global-set-key [(control tab)] 'other-window)
+
+;; faz com que F2 seja a tecla para desfazer operacoes (undo)
+;(global-set-key [f2] 'undo)
+
+;; faz com que F6 mate o buffer atual
+;(global-set-key [f6] 'kill-this-buffer)
+
+;; muda o tamanho de um tab para 4 espacos
+;(setq tab-width 4)
+
+;;......................................................................
+
+;;----------------------------------------------------------------------
+;; colors customizations
+;;----------------------------------------------------------------------
+
+(require 'color-theme)
+(load "~/.emacs.d/color-theme-tangosoft")
+(color-theme-tangosoft)
+
+;; sets background and foreground colors
+;(set-background-color "black")
+;(set-foreground-color "white")
+
+;;----------------------------------------------------------------------
+
+;;----------------------------------------------------------------------
+;; LaTeX (and AucTeX) customizations
+;;----------------------------------------------------------------------
+
+;; make pdflatex default (instead of latex)
+(add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
+
+;; (setq TeX-view
+;;       (quote
+;;        (("^pdf$" "." "evince -f %o"))))
+
+;; run Sweave directly inside a .Rnw file
+;; http://kieranhealy.org/esk/starter-kit-stats.html
+(add-to-list 'auto-mode-alist '("\\.Rnw\\'" . Rnw-mode))
+(add-to-list 'auto-mode-alist '("\\.Snw\\'" . Rnw-mode))
+;; Make TeX and RefTex aware of Snw and Rnw files
+(setq reftex-file-extensions
+      '(("Snw" "Rnw" "nw" "tex" ".tex" ".ltx") ("bib" ".bib")))
+(setq TeX-file-extensions
+      '("Snw" "Rnw" "nw" "tex" "sty" "cls" "ltx" "texi" "texinfo"))
+;; Lets you do 'C-c C-c Sweave' from your Rnw file
+(add-hook 'Rnw-mode-hook
+          (lambda ()
+            (add-to-list 'TeX-command-list
+                         '("Sweave" "R CMD Sweave %s"
+                           TeX-run-command nil (latex-mode) :help "Run Sweave") t)
+            (add-to-list 'TeX-command-list
+                         '("LatexSweave" "%l %(mode) %s"
+                           TeX-run-TeX nil (latex-mode) :help "Run Latex after Sweave") t)
+            (setq TeX-command-default "Sweave")))
+
+;;----------------------------------------------------------------------
+
+;;----------------------------------------------------------------------
+;; ess and R related customizations
+;;----------------------------------------------------------------------
+
+;; calls ess
+(require 'ess-site)
+
+;; show function arguments in [R] buffers
+(require 'ess-eldoc)
+; also show in *R* buffers
+(add-hook 'inferior-ess-mode-hook 'ess-use-eldoc)
+
+
+(add-hook 'ess-mode-hook 'yas/minor-mode-on)
+;(require 'yasnippet)
+
+
+(load "~/.emacs.d/r-autoyas")
+(require 'r-autoyas)
+(add-hook 'ess-mode-hook 'r-autoyas-ess-activate)
+
+
+
+
+;; Recommended customizatios found in "R Internals" manual
+;; http://cran.r-project.org/doc/manuals/R-ints.html#R-coding-standards
+;;......................................................................
+;; C code
+(add-hook 'c-mode-hook
+	  (lambda () (c-set-style "bsd")))
+
+;; ESS code
+(add-hook 'ess-mode-hook
+	  (lambda ()
+	    (ess-set-style 'RRR) ; C++ is default. See ess-custom.el
+	    ;; Because
+	    ;;                                 DEF GNU BSD K&R C++
+	    ;; ess-indent-level                  2   2   8   5   4
+	    ;; ess-continued-statement-offset    2   2   8   5   4
+	    ;; ess-brace-offset                  0   0  -8  -5  -4
+	    ;; ess-arg-function-offset           2   4   0   0   0
+	    ;; ess-expression-offset             4   2   8   5   4
+	    ;; ess-else-offset                   0   0   0   0   0
+	    ;; ess-close-brace-offset            0   0   0   0   0
+	    (add-hook 'local-write-file-hooks
+		      (lambda ()
+			(ess-nuke-trailing-whitespace)))))
+(setq ess-nuke-trailing-whitespace-p 'ask)
+;; or even
+;; (setq ess-nuke-trailing-whitespace-p t)
+
+;; Perl code
+(add-hook 'perl-mode-hook
+	  (lambda () (setq perl-indent-level 4)))
+;;......................................................................
+
+;; uses the R parser for code formatting:
+;; select region and C-M-\ or M-x indent-region
+;; http://www.emacswiki.org/emacs/ESSRParser
+(defun ess-indent-region-as-R-function (beg end)
+  (let ((string (replace-regexp-in-string
+		 "\"" "\\\\\\&"
+		 (replace-regexp-in-string
+		  "\\\\\"" "\\\\\\&" (buffer-substring-no-properties beg end))))
+	(buf (get-buffer-create "*ess-command-output*")))
+    (ess-force-buffer-current "Process to load into:")
+    (ess-command (format "local({oo<-options(keep.source=FALSE);
+cat('\n',paste(deparse(parse(text=\"%s\")[[1L]]),collapse='\n'),'\n',sep='')
+options(oo)})\n"  string) buf)
+    (with-current-buffer buf
+      (goto-char (point-max))
+      ;; (skip-chars-backward "\n")
+      (let ((end (point)))
+	(goto-char (point-min))
+	(goto-char (1+ (point-at-eol)))
+	(setq string (buffer-substring-no-properties (point) end))
+	))
+    (delete-region beg end)
+    (insert string)
+    ))
+
+(add-hook 'ess-mode-hook '(lambda () (set (make-local-variable 'indent-region-function)
+					  'ess-indent-region-as-R-function)))
+
+;; enables ESS Outline Mode, see
+;; http://www.emacswiki.org/emacs/ESSOutlineMode
+(add-hook 'ess-mode-hook
+	  '(lambda ()
+	     (outline-minor-mode)
+	     (setq outline-regexp "\\(^#\\{4,5\\} \\)\\|\\(^[a-zA-Z0-9_\.]+ ?<-
+?function(.*{\\)")
+	     (defun outline-level ()
+	       (cond ((looking-at "^##### ") 1)
+		     ((looking-at "^#### ") 2)
+		     ((looking-at "^[a-zA-Z0-9_\.]+ ?<- ?function(.*{") 3)
+		     (t 1000)))
+	     ))
+;; Simpler keybindings with the win key: (global for now, FIXME!!)
+;; probably some might not work right on actual windows...
+(global-set-key (kbd "s-a") 'show-all)
+
+(global-set-key (kbd "s-T") 'hide-body)     ;; Hide all body but not subh.
+(global-set-key (kbd "s-t") 'hide-other)    ;; Hide all but current+top
+
+(global-set-key (kbd "s-d") 'hide-subtree)  ;; hide body and subh.
+(global-set-key (kbd "s-s") 'show-subtree)  ;; show body and subheadings
+(global-set-key (kbd "s-D") 'hide-leaves)   ;; hide body from subheadings
+(global-set-key (kbd "s-S") 'show-branches) ;; show subheadings w/o body
+
+(global-set-key (kbd "s-b") 'outline-backward-same-level)
+(global-set-key (kbd "s-f") 'outline-forward-same-level)
+(global-set-key (kbd "s-B") 'outline-up-heading)
+
+(global-set-key (kbd "s-p") 'outline-previous-visible-heading)
+(global-set-key (kbd "s-n") 'outline-next-visible-heading)
+(global-set-key (kbd "s-P") 'outline-previous-heading)
+(global-set-key (kbd "s-N") 'outline-next-heading) 
+
+
+;;......................................................................
+;; DEFUNCT options
+;;......................................................................
+
+;; para usar o pacote colorout no emacs
+;(require 'ansi-color)
+;(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+;;......................................................................
+
+;;----------------------------------------------------------------------
+;; end of .emacs
+;;----------------------------------------------------------------------
