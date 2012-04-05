@@ -17,10 +17,10 @@ configuration I use. More information can be found in the comments
 inside it.
 
 > **NOTE**: I renamed `.emacs` to `emacs.el` to get syntax highlighting
-  from github. If you would like to use this file you should really do
+>  from github. If you would like to use this file you should really do
   
-         ~$ mv emacs.el .emacs
+>         ~$ mv emacs.el .emacs
 	 
-  in your `HOME` directory.
+>  in your `HOME` directory.
 
 [1]: http://www.gnu.org/software/emacs "Emacs"
