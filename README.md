@@ -16,7 +16,7 @@ This repository contains a `.emacs` written in Emacs Lisp, with all the
 configuration I use. More information can be found in the comments
 inside it.
 
-**NOTE**: I renamed `.emacs` to `emacs.el` to get syntax highlighting
+> **NOTE**: I renamed `.emacs` to `emacs.el` to get syntax highlighting
   from github. If you would like to use this file you should really do
   
          ~$ mv emacs.el .emacs
