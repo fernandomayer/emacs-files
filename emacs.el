@@ -151,7 +151,7 @@
 
 ;; calls ess. See
 ;; http://ess.r-project.org/
-(load "~/.emacs.d/ess-12.03/lisp/ess-site")
+(load "~/.emacs.d/ess-12.04/lisp/ess-site")
 (require 'ess-site)
 
 ;; show function arguments in ESS buffers
@@ -280,8 +280,8 @@ options(oo)})\n"  string) buf)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
 ;; ref: http://orgmode.org/manual/Closing-items.html
-(setq org-log-done 'time)
-(setq org-log-done 'note)
+;(setq org-log-done 'time) ; only timestamp
+(setq org-log-done 'note) ; timestamp with note (optional)
 
 ;;......................................................................
 ;; DEFUNCT options
