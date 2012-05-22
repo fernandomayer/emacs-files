@@ -268,6 +268,21 @@ options(oo)})\n"  string) buf)
 (global-set-key (kbd "s-P") 'outline-previous-heading)
 (global-set-key (kbd "s-N") 'outline-next-heading) 
 
+;;======================================================================
+;; orgmode customizations
+;;======================================================================
+
+;; ref: http://orgmode.org/org.html#Introduction
+(require 'org-install)
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+;; ref: http://orgmode.org/manual/Closing-items.html
+(setq org-log-done 'time)
+(setq org-log-done 'note)
+
 ;;......................................................................
 ;; DEFUNCT options
 ;;......................................................................
