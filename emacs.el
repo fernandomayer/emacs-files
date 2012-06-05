@@ -151,7 +151,7 @@
 
 ;; calls ess. See
 ;; http://ess.r-project.org/
-(load "~/.emacs.d/ess-12.04/lisp/ess-site")
+(load "~/.emacs.d/ess-12.04-3/lisp/ess-site")
 (require 'ess-site)
 
 ;; show function arguments in ESS buffers
