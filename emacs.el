@@ -1,7 +1,7 @@
 ;;======================================================================
 ;; emacs customization file
 ;; author: Fernando Mayer
-;; last modified: 2012-07-20
+;; last modified: 2012-07-21
 ;;======================================================================
 
 ;;======================================================================
@@ -22,7 +22,7 @@
 (column-number-mode 1)
 
 ;; initiate with 2 vertical buffers
-(split-window-horizontally)
+;(split-window-horizontally)
 
 ;; break lines at specified column (<= 80, defaults 72)
 (setq-default fill-column 72)
@@ -113,10 +113,20 @@
 ;; make markdown mode visible. Install from
 ;; http://jblevins.org/projects/markdown-mode/
 ;; or emacs-goodies-el in Debian based systems
-(setq auto-mode-alist
-   (cons '("\\.md" . markdown-mode) auto-mode-alist))
+;; The original way to activate it is
+;; (autoload 'markdown-mode "markdown-mode.el"
+;;    "Major mode for editing Markdown files" t)
+;; (setq auto-mode-alist
+;;    (cons '("\\.md" . markdown-mode) auto-mode-alist))
 ;; NOTE: the .md file extension is not a consensus for markdown, so use
 ;; here whatever extension you use for it (e.g. .text, .mdwn, ...)
+;; However, I wanted gfm-mode (Github Flavored Markdown) to be the
+;; default mode for markdown. So I'm using this
+(require 'markdown-mode)
+(add-hook 'markdown-mode-hook 'turn-off-auto-fill)
+(add-to-list 'auto-mode-alist '("\\.md$" . gfm-mode))
+;; from
+;; https://github.com/citizen428/emacs.d/blob/master/config/misc-conf.el
 
 ;;======================================================================
 ;; LaTeX (and AUCTeX) customizations
@@ -157,7 +167,7 @@
 ;; show function arguments in ESS buffers
 (require 'ess-eldoc)
 ; also show in iESS buffers
-(add-hook 'inferior-ess-mode-hook 'ess-use-eldoc)
+;(add-hook 'inferior-ess-mode-hook 'ess-use-eldoc)
 
 ;; turns on yas/minor-mode in ESS buffers (requires yasnippet installed)
 ;; see http://capitaomorte.github.com/yasnippet/faq.html
