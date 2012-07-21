@@ -151,7 +151,7 @@
 
 ;; calls ess. See
 ;; http://ess.r-project.org/
-(load "~/.emacs.d/ess-12.04-3/lisp/ess-site")
+;(load "~/.emacs.d/ess-12.04-3/lisp/ess-site")
 (require 'ess-site)
 
 ;; show function arguments in ESS buffers
@@ -163,15 +163,15 @@
 ;; see http://capitaomorte.github.com/yasnippet/faq.html
 ;; if it doesn't work, use
 ;; M-x yas/minor-mode
-(add-hook 'ess-mode-hook 'yas/minor-mode-on)
+;(add-hook 'ess-mode-hook 'yas/minor-mode-on)
 ;(require 'yasnippet)
 
 ;; uses the autocompletion of arguments from r-autoyas. Must have
 ;; r-autoyas.el in ~/.emacs.d/
 ;; see https://github.com/mlf176f2/r-autoyas.el
-(load "~/.emacs.d/r-autoyas")
-(require 'r-autoyas)
-(add-hook 'ess-mode-hook 'r-autoyas-ess-activate)
+;(load "~/.emacs.d/r-autoyas")
+;(require 'r-autoyas)
+;(add-hook 'ess-mode-hook 'r-autoyas-ess-activate)
 
 ;; Recommended customizatios found in "R Internals" manual
 ;; http://cran.r-project.org/doc/manuals/R-ints.html#R-coding-standards
