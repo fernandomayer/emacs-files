@@ -125,6 +125,7 @@
 (require 'markdown-mode)
 (add-hook 'markdown-mode-hook 'turn-off-auto-fill)
 (add-to-list 'auto-mode-alist '("\\.md$" . gfm-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown$" . gfm-mode))
 ;; from
 ;; https://github.com/citizen428/emacs.d/blob/master/config/misc-conf.el
 
@@ -154,6 +155,10 @@
                          '("LatexSweave" "%l %(mode) %s"
                            TeX-run-TeX nil (latex-mode) :help "Run Latex after Sweave") t)
             (setq TeX-command-default "Sweave")))
+;; Make evince default pdf viewer
+;; http://lists.gnu.org/archive/html/auctex/2010-11/msg00011.html
+(setq TeX-view-program-list '(("Evince" "evince %o")))
+(setq TeX-view-program-selection '((output-pdf "Evince")))
 
 ;;======================================================================
 ;; ess and R related customizations
