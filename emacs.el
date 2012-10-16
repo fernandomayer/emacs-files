@@ -94,11 +94,16 @@
 ;; http://www.emacswiki.org/emacs-en/ColorTheme
 ;; In Debian based systems, install the package emacs-goodies-el
 (require 'color-theme)
+
 ;; This is the color-theme-tangosoft, which require
 ;; color-theme-tangosft.el in your ~/.emacs.d/ . See
 ;; https://github.com/kjhealy/tangosoft-theme
 ;; (load "~/.emacs.d/color-theme-tangosoft")
 ;; (color-theme-tangosoft)
+
+;; This is for solarized (http://ethanschoonover.com/solarized)
+;; Just clone it into ~/.emacs.d
+;; https://github.com/sellout/emacs-color-theme-solarized
 (load "~/.emacs.d/emacs-color-theme-solarized/color-theme-solarized")
 (color-theme-solarized-dark) ; light
 
