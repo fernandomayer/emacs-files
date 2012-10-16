@@ -22,7 +22,7 @@
 (column-number-mode 1)
 
 ;; initiate with 2 vertical buffers
-;(split-window-horizontally)
+(split-window-horizontally)
 
 ;; break lines at specified column (<= 80, defaults 72)
 (setq-default fill-column 72)
@@ -64,12 +64,16 @@
 	;; removes terminal bell (make it visible only)
 	'(visible-bell t))
 
+;; C-TAB move between buffers
+(global-set-key [(control tab)] 'other-window)
+
+;; enable iswitchb mode: C-x b now shows a list of buffers
+;; ref: http://emacs-fu.blogspot.com.br/2009/02/switching-buffers.html
+(iswitchb-mode t)
+
 ;;......................................................................
 ;; DEFUNCT options
 ;;......................................................................
-
-;; C-TAB move between buffers
-;(global-set-key [(control tab)] 'other-window)
 
 ;; F2 as undo
 ;(global-set-key [f2] 'undo)
@@ -93,8 +97,10 @@
 ;; This is the color-theme-tangosoft, which require
 ;; color-theme-tangosft.el in your ~/.emacs.d/ . See
 ;; https://github.com/kjhealy/tangosoft-theme
-(load "~/.emacs.d/color-theme-tangosoft")
-(color-theme-tangosoft)
+;; (load "~/.emacs.d/color-theme-tangosoft")
+;; (color-theme-tangosoft)
+(load "~/.emacs.d/emacs-color-theme-solarized/color-theme-solarized")
+(color-theme-solarized-dark) ; light
 
 ;;......................................................................
 ;; DEFUNCT options
@@ -168,6 +174,7 @@
 ;; http://ess.r-project.org/
 ;(load "~/.emacs.d/ess-12.04-3/lisp/ess-site")
 (require 'ess-site)
+(setq-default ess-dialect "R")
 
 ;; show function arguments in ESS buffers
 (require 'ess-eldoc)
