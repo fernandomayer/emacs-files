@@ -21,7 +21,7 @@
 (column-number-mode 1)
 
 ;; initiate with 2 vertical buffers
-(split-window-horizontally)
+;(split-window-horizontally)
 
 ;; break lines at specified column (<= 80, defaults 72)
 (setq-default fill-column 72)
@@ -104,7 +104,11 @@
 ;; Just clone it into ~/.emacs.d
 ;; https://github.com/sellout/emacs-color-theme-solarized
 (load "~/.emacs.d/emacs-color-theme-solarized/color-theme-solarized")
-(color-theme-solarized-dark) ; light
+(require 'color-theme-solarized)
+;; always initialize on dark, but you can change here for *-light
+(color-theme-solarized-dark)
+;; or you can change it live with
+;; M-x color-theme-solarized-[light|dark]
 
 ;;......................................................................
 ;; DEFUNCT options
@@ -308,6 +312,18 @@ options(oo)})\n"  string) buf)
 ;; ref: http://orgmode.org/manual/Closing-items.html
 ;(setq org-log-done 'time) ; only timestamp
 (setq org-log-done 'note) ; timestamp with note (optional)
+
+;;======================================================================
+;; Maxima mode
+;;======================================================================
+
+;; ref: http://emacswiki.org/emacs/MaximaMode
+(add-to-list 'load-path "/usr/local/share/maxima/5.18.1/emacs/")
+(autoload 'maxima-mode "maxima" "Maxima mode" t)
+(autoload 'imaxima "imaxima" "Frontend for maxima with Image support" t)
+(autoload 'maxima "maxima" "Maxima interaction" t)
+(autoload 'imath-mode "imath" "Imath mode for math formula input" t)
+(setq imaxima-use-maxima-mode-flag t)
 
 ;;......................................................................
 ;; DEFUNCT options
