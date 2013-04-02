@@ -180,7 +180,8 @@
 
 ;; calls ess. See
 ;; http://ess.r-project.org/
-;(load "~/.emacs.d/ess-12.04-3/lisp/ess-site")
+;; git clone git@github.com:emacs-ess/ESS.git
+(load "~/.emacs.d/ESS/lisp/ess-site")
 (require 'ess-site)
 (setq-default ess-dialect "R")
 
@@ -297,6 +298,12 @@ options(oo)})\n"  string) buf)
 (global-set-key (kbd "s-n") 'outline-next-visible-heading)
 (global-set-key (kbd "s-P") 'outline-previous-heading)
 (global-set-key (kbd "s-N") 'outline-next-heading) 
+
+;;......................................................................
+;; Julia
+;;......................................................................
+;; https://github.com/emacs-ess/ESS/wiki/Julia
+(setq inferior-julia-program-name "/home/fernando/Programas/julia/usr/bin/julia-release-basic")
 
 ;;======================================================================
 ;; orgmode customizations
