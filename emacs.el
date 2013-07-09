@@ -102,7 +102,7 @@
 
 ;; This is for solarized (http://ethanschoonover.com/solarized)
 ;; Just clone it into ~/.emacs.d
-;; https://github.com/sellout/emacs-color-theme-solarized
+;; git clone git@github.com:sellout/emacs-color-theme-solarized.git
 (load "~/.emacs.d/emacs-color-theme-solarized/color-theme-solarized")
 (require 'color-theme-solarized)
 ;; always initialize on dark, but you can change here for *-light
