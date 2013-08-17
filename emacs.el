@@ -127,21 +127,33 @@
 ;; make markdown mode visible. Install from
 ;; http://jblevins.org/projects/markdown-mode/
 ;; or emacs-goodies-el in Debian based systems
-;; The original way to activate it is
-;; (autoload 'markdown-mode "markdown-mode.el"
-;;    "Major mode for editing Markdown files" t)
-;; (setq auto-mode-alist
-;;    (cons '("\\.md" . markdown-mode) auto-mode-alist))
 ;; NOTE: the .md file extension is not a consensus for markdown, so use
 ;; here whatever extension you use for it (e.g. .text, .mdwn, ...)
 ;; However, I wanted gfm-mode (Github Flavored Markdown) to be the
 ;; default mode for markdown. So I'm using this
-(require 'markdown-mode)
-(add-hook 'markdown-mode-hook 'turn-off-auto-fill)
-(add-to-list 'auto-mode-alist '("\\.md$" . gfm-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown$" . gfm-mode))
+;; (require 'markdown-mode)
+;; (add-hook 'markdown-mode-hook 'turn-off-auto-fill)
+;; (add-to-list 'auto-mode-alist '("\\.md$" . gfm-mode))
+;; (add-to-list 'auto-mode-alist '("\\.markdown$" . gfm-mode))
 ;; from
 ;; https://github.com/citizen428/emacs.d/blob/master/config/misc-conf.el
+;; NOTE: the gfm-mode makes .md files not to respect the fill-column
+;; limit with polymode (below) enabled. For this reason I'm using the
+;; original markdown call from jblevins.
+(autoload 'markdown-mode "markdown-mode"
+  "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+;; polymode
+;; git clone https://github.com/vitoshka/polymode.git
+(setq load-path
+      (append '("~/.emacs.d/polymode/"  "~/.emacs.d/polymode/modes")
+              load-path))
+(require 'poly-R)
+(require 'poly-markdown)
+(require 'poly-noweb)
 
 ;;======================================================================
 ;; LaTeX (and AUCTeX) customizations
@@ -150,25 +162,27 @@
 ;; make pdflatex default (instead of latex)
 (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
 
+;; This is DEFUNCT since ESS handles all these nowadays
 ;; run Sweave directly inside a .Rnw file
 ;; ref: http://kieranhealy.org/esk/starter-kit-stats.html
-(add-to-list 'auto-mode-alist '("\\.Rnw\\'" . Rnw-mode))
-(add-to-list 'auto-mode-alist '("\\.Snw\\'" . Rnw-mode))
-;; Make TeX and RefTex aware of Snw and Rnw files
-(setq reftex-file-extensions
-      '(("Snw" "Rnw" "nw" "tex" ".tex" ".ltx") ("bib" ".bib")))
-(setq TeX-file-extensions
-      '("Snw" "Rnw" "nw" "tex" "sty" "cls" "ltx" "texi" "texinfo"))
-;; Lets you do 'C-c C-c Sweave' from your Rnw file
-(add-hook 'Rnw-mode-hook
-          (lambda ()
-            (add-to-list 'TeX-command-list
-                         '("Sweave" "R CMD Sweave %s"
-                           TeX-run-command nil (latex-mode) :help "Run Sweave") t)
-            (add-to-list 'TeX-command-list
-                         '("LatexSweave" "%l %(mode) %s"
-                           TeX-run-TeX nil (latex-mode) :help "Run Latex after Sweave") t)
-            (setq TeX-command-default "Sweave")))
+;; (add-to-list 'auto-mode-alist '("\\.Rnw\\'" . Rnw-mode))
+;; (add-to-list 'auto-mode-alist '("\\.Snw\\'" . Rnw-mode))
+;; ;; Make TeX and RefTex aware of Snw and Rnw files
+;; (setq reftex-file-extensions
+;;       '(("Snw" "Rnw" "nw" "tex" ".tex" ".ltx") ("bib" ".bib")))
+;; (setq TeX-file-extensions
+;;       '("Snw" "Rnw" "nw" "tex" "sty" "cls" "ltx" "texi" "texinfo"))
+;; ;; Lets you do 'C-c C-c Sweave' from your Rnw file
+;; (add-hook 'Rnw-mode-hook
+;;           (lambda ()
+;;             (add-to-list 'TeX-command-list
+;;                          '("Sweave" "R CMD Sweave %s"
+;;                            TeX-run-command nil (latex-mode) :help "Run Sweave") t)
+;;             (add-to-list 'TeX-command-list
+;;                          '("LatexSweave" "%l %(mode) %s"
+;;                            TeX-run-TeX nil (latex-mode) :help "Run Latex after Sweave") t)
+;;             (setq TeX-command-default "Sweave")))
+
 ;; Make evince default pdf viewer
 ;; http://lists.gnu.org/archive/html/auctex/2010-11/msg00011.html
 (setq TeX-view-program-list '(("Evince" "evince %o")))
@@ -303,7 +317,7 @@ options(oo)})\n"  string) buf)
 ;; Julia
 ;;......................................................................
 ;; https://github.com/emacs-ess/ESS/wiki/Julia
-(setq inferior-julia-program-name "/home/fernando/Programas/julia/usr/bin/julia-release-basic")
+(setq inferior-julia-program-name "~/Programas/julia/usr/bin/julia-release-basic")
 
 ;;======================================================================
 ;; orgmode customizations
