@@ -21,7 +21,7 @@
 (column-number-mode 1)
 
 ;; initiate with 2 vertical buffers
-;(split-window-horizontally)
+(split-window-horizontally)
 
 ;; break lines at specified column (<= 80, defaults 72)
 (setq-default fill-column 72)
@@ -69,6 +69,9 @@
 ;; enable iswitchb mode: C-x b now shows a list of buffers
 ;; ref: http://emacs-fu.blogspot.com.br/2009/02/switching-buffers.html
 (iswitchb-mode t)
+
+;; para habilitar os acentos no xubuntu 14.04
+(require 'iso-transl)
 
 ;;......................................................................
 ;; DEFUNCT options
@@ -187,6 +190,10 @@
 ;; http://lists.gnu.org/archive/html/auctex/2010-11/msg00011.html
 (setq TeX-view-program-list '(("Evince" "evince %o")))
 (setq TeX-view-program-selection '((output-pdf "Evince")))
+
+;; To prevent "Error occured after last TeX file closed"
+;; http://tex.stackexchange.com/questions/124246/uninformative-error-message-when-using-auctex
+(setq LaTeX-command-style '(("" "%(PDF)%(latex) -file-line-error %S%(PDFout)")))
 
 ;;======================================================================
 ;; ess and R related customizations
