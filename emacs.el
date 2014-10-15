@@ -143,11 +143,11 @@
 ;; NOTE: the gfm-mode makes .md files not to respect the fill-column
 ;; limit with polymode (below) enabled. For this reason I'm using the
 ;; original markdown call from jblevins.
-(autoload 'markdown-mode "markdown-mode"
-  "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+;; (autoload 'markdown-mode "markdown-mode"
+;;   "Major mode for editing Markdown files" t)
+;; (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+;; (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+;; (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 ;; polymode
 ;; git clone https://github.com/vitoshka/polymode.git
@@ -157,6 +157,22 @@
 (require 'poly-R)
 (require 'poly-markdown)
 (require 'poly-noweb)
+;; activation of polymodes
+;; https://github.com/vitoshka/polymode/blob/master/polymode-configuration.el
+;;; MARKDOWN
+(add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
+;;; ORG
+(add-to-list 'auto-mode-alist '("\\.org" . poly-org-mode))
+;;; R related modes
+(add-to-list 'auto-mode-alist '("\\.Snw" . poly-noweb+r-mode))
+(add-to-list 'auto-mode-alist '("\\.Rnw" . poly-noweb+r-mode))
+(add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
+(add-to-list 'auto-mode-alist '("\\.rapport" . poly-rapport-mode))
+(add-to-list 'auto-mode-alist '("\\.Rhtml" . poly-html+r-mode))
+(add-to-list 'auto-mode-alist '("\\.Rbrew" . poly-brew+r-mode))
+(add-to-list 'auto-mode-alist '("\\.Rcpp" . poly-r+c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cppR" . poly-c++r-mode))
+(provide 'polymode-configuration)
 
 ;;======================================================================
 ;; LaTeX (and AUCTeX) customizations
