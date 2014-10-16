@@ -167,6 +167,8 @@
 (add-to-list 'auto-mode-alist '("\\.Snw" . poly-noweb+r-mode))
 (add-to-list 'auto-mode-alist '("\\.Rnw" . poly-noweb+r-mode))
 (add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
+(add-to-list 'auto-mode-alist '("\\.Rmarkdown" . poly-markdown+r-mode))
+(add-to-list 'auto-mode-alist '("\\.Rmk" . poly-markdown+r-mode))
 (add-to-list 'auto-mode-alist '("\\.rapport" . poly-rapport-mode))
 (add-to-list 'auto-mode-alist '("\\.Rhtml" . poly-html+r-mode))
 (add-to-list 'auto-mode-alist '("\\.Rbrew" . poly-brew+r-mode))
