@@ -8,7 +8,7 @@
 ;;======================================================================
 
 ;; add ~/.emacs.d/ to the load-path
-(add-to-list 'load-path "~/.emacs.d/")
+;(add-to-list 'load-path "~/.emacs.d/")
 
 ;; activate highlighting for the current line
 ;; a list with possible colors is available with M-x list-colors-display
@@ -21,7 +21,7 @@
 (column-number-mode 1)
 
 ;; initiate with 2 vertical buffers
-(split-window-horizontally)
+;(split-window-horizontally)
 
 ;; break lines at specified column (<= 80, defaults 72)
 (setq-default fill-column 72)
@@ -95,6 +95,8 @@
 ;; color-theme.el is nedded, see
 ;; http://www.emacswiki.org/emacs-en/ColorTheme
 ;; In Debian based systems, install the package emacs-goodies-el
+;; In Arch based systems, DONT install emacs-goodies-el, just install
+;; emacs-color-theme package from the repositories
 (require 'color-theme)
 
 ;; This is the color-theme-tangosoft, which require
@@ -130,27 +132,17 @@
 ;; make markdown mode visible. Install from
 ;; http://jblevins.org/projects/markdown-mode/
 ;; or emacs-goodies-el in Debian based systems
-;; NOTE: the .md file extension is not a consensus for markdown, so use
-;; here whatever extension you use for it (e.g. .text, .mdwn, ...)
-;; However, I wanted gfm-mode (Github Flavored Markdown) to be the
-;; default mode for markdown. So I'm using this
-;; (require 'markdown-mode)
-;; (add-hook 'markdown-mode-hook 'turn-off-auto-fill)
-;; (add-to-list 'auto-mode-alist '("\\.md$" . gfm-mode))
-;; (add-to-list 'auto-mode-alist '("\\.markdown$" . gfm-mode))
-;; from
-;; https://github.com/citizen428/emacs.d/blob/master/config/misc-conf.el
-;; NOTE: the gfm-mode makes .md files not to respect the fill-column
-;; limit with polymode (below) enabled. For this reason I'm using the
-;; original markdown call from jblevins.
-;; (autoload 'markdown-mode "markdown-mode"
-;;   "Major mode for editing Markdown files" t)
-;; (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
-;; (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-;; (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+;; In Arch based systems DONT install emacs-goodies-el, install the
+;; markdown-mode via git
+
+;; markdown-mode
+;; git clone git://jblevins.org/git/markdown-mode.git
+(setq load-path
+      (append '("~/.emacs.d/markdown-mode")
+              load-path))
 
 ;; polymode
-;; git clone https://github.com/vitoshka/polymode.git
+;; git clone https://github.com/vspinu/polymode.git
 (setq load-path
       (append '("~/.emacs.d/polymode/"  "~/.emacs.d/polymode/modes")
               load-path))
@@ -158,7 +150,7 @@
 (require 'poly-markdown)
 (require 'poly-noweb)
 ;; activation of polymodes
-;; https://github.com/vitoshka/polymode/blob/master/polymode-configuration.el
+;; https://github.com/vspinu/polymode/blob/master/polymode-configuration.el
 ;;; MARKDOWN
 (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
 ;;; ORG
