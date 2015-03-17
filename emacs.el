@@ -172,6 +172,11 @@
 ;; LaTeX (and AUCTeX) customizations
 ;;======================================================================
 
+
+;; In Arch Linux, these lines are needed to enable AUCTex
+(load "auctex.el" nil t t)
+(load "preview-latex.el" nil t t)
+
 ;; make pdflatex default (instead of latex)
 (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
 
