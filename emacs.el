@@ -21,7 +21,7 @@
 (column-number-mode 1)
 
 ;; initiate with 2 vertical buffers
-;(split-window-horizontally)
+(split-window-horizontally)
 
 ;; break lines at specified column (<= 80, defaults 72)
 (setq-default fill-column 72)
@@ -36,7 +36,8 @@
 ;; buffers
 (setq x-select-enable-clipboard t)
 
-;; disable automatic backup copies (~)
+;; disable auto-save (#*#) and auto-backup (~) files
+(setq auto-save-default nil)
 (setq make-backup-files nil)
 
 ;; Automatic brackets, etc
