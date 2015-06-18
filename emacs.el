@@ -74,6 +74,15 @@
 ;; para habilitar os acentos no xubuntu 14.04
 (require 'iso-transl)
 
+;; To revert-buffer without confirmation
+;; Source: http://www.emacswiki.org/emacs-en/download/misc-cmds.el
+(defun revert-buffer-no-confirm ()
+    "Revert buffer without confirmation."
+    (interactive)
+    (revert-buffer t t))
+; AND bind it to F5
+(global-set-key [f5] 'revert-buffer-no-confirm)
+
 ;;......................................................................
 ;; DEFUNCT options
 ;;......................................................................
