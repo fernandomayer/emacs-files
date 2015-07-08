@@ -92,6 +92,30 @@
 ;; C-- to get division line with 43 -.
 (global-set-key [?\C--] (kbd "C-u 4 3 -"))
 
+;; Add highlighting for certain keywords.
+;; http://lists.gnu.org/archive/html/emacs-orgmode/2010-09/txtb5ChQJCDny.txt
+;; http://emacs.1067599.n5.nabble.com/Adding-keywords-for-font-lock-experts-td95645.html
+(make-face 'special-words) 
+(set-face-attribute 'special-words nil :foreground "White" :background "Firebrick") 
+
+(dolist
+    (mode '(fundamental-mode
+            gnus-article-mode
+            org-mode
+            shell-mode
+            muse-mode
+            ess-mode
+            polymode-mode
+            markdown-mode
+            TeX-mode)) 
+  (font-lock-add-keywords
+   mode 
+   '(("\\<\\(COMMENT\\|DONE\\|TODO\\|STOP\\|IMPORTANT\\|NOTE\\|OBS\\|ATTENTION\\|REVIEW\\)" 
+      0 'font-lock-warning-face t) 
+     ("\\<\\(BUG\\|WARNING\\|DANGER\\|FIXME\\)" 
+      0 'special-words t)))
+  )
+
 ;;......................................................................
 ;; DEFUNCT options
 ;;......................................................................
@@ -197,6 +221,29 @@
 ; key binding
 (global-set-key (kbd "C-c i") 'insert-chunk)
 
+;; mark a word at a point
+;; http://www.emacswiki.org/emacs/ess-edit.el
+(defun ess-edit-word-at-point ()
+  (save-excursion
+    (buffer-substring
+     (+ (point) (skip-chars-backward "a-zA-Z0-9._"))
+     (+ (point) (skip-chars-forward "a-zA-Z0-9._")))))
+;; eval any word where the cursor is (objects, functions, etc)
+(defun ess-eval-word ()
+  (interactive)
+  (let ((x (ess-edit-word-at-point)))
+    (ess-eval-linewise (concat x)))
+)
+; key binding
+(global-set-key (kbd "C-c r") 'ess-eval-word)
+
+;; the first tentative
+;; (defun ess-eval-word0 ()
+;;   (interactive)
+;;   (backward-word)
+;;   (mark-word)
+;;   (ess-eval-region (region-beginning) (region-end) 'nowait)
+;; )
 
 ;;======================================================================
 ;; LaTeX (and AUCTeX) customizations
@@ -241,7 +288,7 @@
 (setq LaTeX-command-style '(("" "%(PDF)%(latex) -file-line-error %S%(PDFout)")))
 
 ;;======================================================================
-;; ess and R related customizations
+;; ESS and R related customizations
 ;;======================================================================
 
 ;; calls ess. See
@@ -255,6 +302,42 @@
 (require 'ess-eldoc)
 ; also show in iESS buffers
 ;(add-hook 'inferior-ess-mode-hook 'ess-use-eldoc)
+
+;; http://permalink.gmane.org/gmane.emacs.ess.general/8419
+;; Script font lock highlight.
+(setq ess-R-font-lock-keywords
+      '((ess-R-fl-keyword:modifiers . t)
+        (ess-R-fl-keyword:fun-defs . t)
+        (ess-R-fl-keyword:keywords . t)
+        (ess-R-fl-keyword:assign-ops . t)
+        (ess-R-fl-keyword:constants . t)
+        (ess-fl-keyword:fun-calls . t)
+        (ess-fl-keyword:numbers . t)
+        (ess-fl-keyword:operators . t)
+        (ess-fl-keyword:delimiters . t)
+        (ess-fl-keyword:= . t)
+        (ess-R-fl-keyword:F&T . t)
+        (ess-R-fl-keyword:%op% . t)
+        ))
+
+;; Console font lock highlight.
+(setq inferior-R-font-lock-keywords
+      '((ess-S-fl-keyword:prompt . t)
+        (ess-R-fl-keyword:messages . t)
+        (ess-R-fl-keyword:modifiers . t)
+        (ess-R-fl-keyword:fun-defs . t)
+        (ess-R-fl-keyword:keywords . t)
+        (ess-R-fl-keyword:assign-ops . t)
+        (ess-R-fl-keyword:constants . t)
+        (ess-fl-keyword:matrix-labels . t)
+        (ess-fl-keyword:fun-calls . t)
+        (ess-fl-keyword:numbers . t)
+        (ess-fl-keyword:operators . t)
+        (ess-fl-keyword:delimiters . t)
+        (ess-fl-keyword:= . t)
+        (ess-R-fl-keyword:F&T . t)
+        (ess-R-fl-keyword:%op% . t)
+        ))
 
 ;; turns on yas/minor-mode in ESS buffers (requires yasnippet installed)
 ;; see http://capitaomorte.github.com/yasnippet/faq.html
@@ -478,6 +561,7 @@ options(oo)})\n"  string) buf)
 
 (global-set-key (kbd "S-<delete>") 'cut-line-or-region)  ; cut.
 (global-set-key (kbd "C-<insert>") 'copy-line-or-region) ; copy.
+
 
 ;;----------------------------------------------------------------------
 ;; (un)Comment without selection.
