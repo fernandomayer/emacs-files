@@ -23,4 +23,8 @@ inside it.
 	 
 >  in your `HOME` directory.
 
+Many things here are shared with the repo of
+[Walmes Zeviani](https://github.com/walmes/emacs) who have many other
+features.
+
 [1]: http://www.gnu.org/software/emacs "Emacs"
