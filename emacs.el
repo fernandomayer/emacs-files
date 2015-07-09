@@ -84,13 +84,13 @@
 (global-set-key [f5] 'revert-buffer-no-confirm)
 
 ;; M-= to get division line with 70 =.
-(global-set-key [?\M-=] (kbd "C-u 7 0 ="))
+(global-set-key [?\M-=] (kbd "## C-u 7 0 ="))
 
 ;; M-- to get division line with 70 -.
-(global-set-key [?\M--] (kbd "C-u 7 0 -"))
+(global-set-key [?\M--] (kbd "## C-u 7 0 -"))
 
 ;; C-- to get division line with 43 -.
-(global-set-key [?\C--] (kbd "C-u 4 3 -"))
+(global-set-key [?\C--] (kbd "## C-u 4 3 -"))
 
 ;; Add highlighting for certain keywords.
 ;; http://lists.gnu.org/archive/html/emacs-orgmode/2010-09/txtb5ChQJCDny.txt
