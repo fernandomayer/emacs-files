@@ -23,6 +23,14 @@ inside it.
 	 
 >  in your `HOME` directory.
 
+The file `functions.el` contain several defined functions for various
+modes of emacs. This file must be in `~/.emacs.d/functions.el`, and it
+is loaded inside `.emacs` with
+
+```shell
+(load "~/.emacs.d/functions")
+```
+
 Many things here are shared with the repo of
 [Walmes Zeviani](https://github.com/walmes/emacs) who have many other
 features.
