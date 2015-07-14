@@ -132,10 +132,17 @@
 ;;......................................................................
 
 ;;======================================================================
-;; Load function.el
+;; Load functions
 ;;======================================================================
 
+;; funcions.el
 (load "~/.emacs.d/functions")
+
+;; essh.el
+;; http://www.emacswiki.org/emacs/download/essh.el
+;; after download, put it in
+;; ~/.emacs.d/essh.el
+(load "~/.emacs.d/essh")
 
 ;;======================================================================
 ;; colors customizations
