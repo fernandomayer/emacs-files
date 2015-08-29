@@ -4,6 +4,16 @@
 ;;======================================================================
 
 ;;======================================================================
+;; Enable ELPA repository
+;;======================================================================
+
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (add-to-list 'package-archives
+               '("melpa" . "http://melpa.org/packages/") t)
+  (package-initialize))
+
+;;======================================================================
 ;; general or global customizations
 ;;======================================================================
 
@@ -154,6 +164,8 @@
 ;; In Arch based systems, DONT install emacs-goodies-el, just install
 ;; emacs-color-theme package from the repositories
 (require 'color-theme)
+(color-theme-initialize)
+(setq color-theme-is-global t)
 
 ;; This is the color-theme-tangosoft, which require
 ;; color-theme-tangosft.el in your ~/.emacs.d/ . See
@@ -164,7 +176,7 @@
 ;; This is for solarized (http://ethanschoonover.com/solarized)
 ;; Just clone it into ~/.emacs.d
 ;; git clone git@github.com:sellout/emacs-color-theme-solarized.git
-(load "~/.emacs.d/emacs-color-theme-solarized/color-theme-solarized")
+;(load "~/.emacs.d/emacs-color-theme-solarized/color-theme-solarized")
 (require 'color-theme-solarized)
 ;; always initialize on dark, but you can change here for *-light
 (color-theme-solarized-dark)
@@ -193,15 +205,15 @@
 
 ;; markdown-mode
 ;; git clone git://jblevins.org/git/markdown-mode.git
-(setq load-path
-      (append '("~/.emacs.d/markdown-mode")
-              load-path))
+;; (setq load-path
+;;       (append '("~/.emacs.d/markdown-mode")
+;;               load-path))
 
 ;; polymode
 ;; git clone https://github.com/vspinu/polymode.git
-(setq load-path
-      (append '("~/.emacs.d/polymode/"  "~/.emacs.d/polymode/modes")
-              load-path))
+;; (setq load-path
+;;       (append '("~/.emacs.d/polymode/"  "~/.emacs.d/polymode/modes")
+;;               load-path))
 (require 'poly-R)
 (require 'poly-markdown)
 (require 'poly-noweb)
@@ -272,14 +284,14 @@
 ;; calls ess. See
 ;; http://ess.r-project.org/
 ;; git clone git@github.com:emacs-ess/ESS.git
-(load "~/.emacs.d/ESS/lisp/ess-site")
+;(load "~/.emacs.d/ESS/lisp/ess-site")
 (require 'ess-site)
 (setq-default ess-dialect "R")
 
 ;; show function arguments in ESS buffers
 (require 'ess-eldoc)
 ; also show in iESS buffers
-;(add-hook 'inferior-ess-mode-hook 'ess-use-eldoc)
+(add-hook 'inferior-ess-mode-hook 'ess-use-eldoc)
 
 ;; http://permalink.gmane.org/gmane.emacs.ess.general/8419
 ;; Script font lock highlight.
@@ -402,14 +414,14 @@
 ;; Julia
 ;;......................................................................
 ;; https://github.com/emacs-ess/ESS/wiki/Julia
-(setq inferior-julia-program-name "~/Programas/julia/usr/bin/julia-release-basic")
+;(setq inferior-julia-program-name "~/Programas/julia/usr/bin/julia-release-basic")
 
 ;;======================================================================
 ;; orgmode customizations
 ;;======================================================================
 
 ;; ref: http://orgmode.org/org.html#Introduction
-(require 'org-install)
+;(require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-cc" 'org-capture)
@@ -424,7 +436,7 @@
 ;;======================================================================
 
 ;; ref: http://emacswiki.org/emacs/MaximaMode
-(add-to-list 'load-path "/usr/local/share/maxima/5.18.1/emacs/")
+;(add-to-list 'load-path "/usr/local/share/maxima/5.18.1/emacs/")
 (autoload 'maxima-mode "maxima" "Maxima mode" t)
 (autoload 'imaxima "imaxima" "Frontend for maxima with Image support" t)
 (autoload 'maxima "maxima" "Maxima interaction" t)
@@ -447,7 +459,7 @@
 
 ;; auto-complete
 ;; instalar https://aur.archlinux.org/packages/auto-complete/
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/auto-complete")
+;(add-to-list 'load-path "/usr/share/emacs/site-lisp/auto-complete")
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories
 	     "/usr/share/emacs/site-lisp/auto-complete/ac-dict")
@@ -455,6 +467,12 @@
 
 ;; To activate ESS auto-complete for R
 (setq ess-use-auto-complete 'script-only)
+
+;;======================================================================
+;; Enable Prelude packages: a list of packages to be always installed
+;;======================================================================
+
+(load "~/.emacs.d/prelude-packages")
 
 ;;======================================================================
 ;; end of .emacs
