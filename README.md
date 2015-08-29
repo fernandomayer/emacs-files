@@ -23,16 +23,25 @@ inside it.
 	 
 >  in your `HOME` directory.
 
-The file `functions.el` contain several defined functions for various
+The file `functions.el` contains several defined functions for various
 modes of emacs. This file must be in `~/.emacs.d/functions.el`, and it
 is loaded inside `.emacs` with
 
-```shell
+```sh
 (load "~/.emacs.d/functions")
 ```
 
+The file `prelude-packages.el` contains a list of packages to be
+installed (or updated, if already installed), from the
+[MELPA](http://melpa.org) repository. It must be in
+`~/.emacs.d/prelude-packages.el`, and can be loaded in `.emacs` with
+
+```sh
+(load "~/.emacs.d/prelude-packages.el")
+```
+
 Many things here are shared with the repo of
-[Walmes Zeviani](https://github.com/walmes/emacs) who have many other
-features.
+[Walmes Zeviani](https://git.leg.ufpr.br/walmes/emacs) who have many
+other features.
 
 [1]: http://www.gnu.org/software/emacs "Emacs"
