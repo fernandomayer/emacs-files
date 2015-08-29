@@ -158,30 +158,47 @@
 ;; colors customizations
 ;;======================================================================
 
-;; color-theme.el is nedded, see
 ;; http://www.emacswiki.org/emacs-en/ColorTheme
 ;; In Debian based systems, install the package emacs-goodies-el
 ;; In Arch based systems, DONT install emacs-goodies-el, just install
 ;; emacs-color-theme package from the repositories
 (require 'color-theme)
-(color-theme-initialize)
-(setq color-theme-is-global t)
 
-;; This is the color-theme-tangosoft, which require
-;; color-theme-tangosft.el in your ~/.emacs.d/ . See
-;; https://github.com/kjhealy/tangosoft-theme
-;; (load "~/.emacs.d/color-theme-tangosoft")
-;; (color-theme-tangosoft)
+;; To enable solarized and switching from solarized-dark to/from
+;; solarized-light. The package from MELPA is colot-theme-solarized from
+;; @sellout: https://github.com/sellout/emacs-color-theme-solarized
+;; The definitions and functions below are from @pyr
+;; https://github.com/pyr/dot.emacs/blob/master/customizations/40-theme.el
+;; Globally map C-c t to a light/dark theme switcher
+;; Also pull-in graphene for better fonts
+(setq solarized-default-background-mode 'dark)
 
-;; This is for solarized (http://ethanschoonover.com/solarized)
-;; Just clone it into ~/.emacs.d
-;; git clone git@github.com:sellout/emacs-color-theme-solarized.git
-;(load "~/.emacs.d/emacs-color-theme-solarized/color-theme-solarized")
-(require 'color-theme-solarized)
-;; always initialize on dark, but you can change here for *-light
-(color-theme-solarized-dark)
-;; or you can change it live with
-;; M-x color-theme-solarized-[light|dark]
+(load-theme 'solarized t)
+
+(defun set-background-mode (frame mode)
+  (set-frame-parameter frame 'background-mode mode)
+  (when (not (display-graphic-p frame))
+    (set-terminal-parameter (frame-terminal frame) 'background-mode mode))
+  (enable-theme 'solarized))
+
+(defun switch-theme ()
+  (interactive)
+  (let ((mode  (if (eq (frame-parameter nil 'background-mode) 'dark)
+                   'light 'dark)))
+    (set-background-mode nil mode)))
+
+(add-hook 'after-make-frame-functions
+          (lambda (frame) (set-background-mode frame solarized-default-background-mode)))
+
+(set-background-mode nil solarized-default-background-mode)
+
+(global-set-key (kbd "C-c t") 'switch-theme)
+
+; custom variables, see
+; https://github.com/sellout/emacs-color-theme-solarized
+(custom-set-variables '(solarized-termcolors 256))
+(custom-set-variables '(solarized-contrast 'high))
+(custom-set-variables '(solarized-visibility 'high))
 
 ;;......................................................................
 ;; DEFUNCT options
