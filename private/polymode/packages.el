@@ -59,7 +59,23 @@ Each entry is either:
         recipe.  See: https://github.com/milkypostman/melpa#recipe-format")
 
 (defun polymode/init-polymode ()
-  (use-package polymode)
+  (use-package polymode
+    :mode (("\\.Rmd"   . rmd-mode))
+    :init
+    (progn
+      (defun rmd-mode ()
+        "ESS Markdown mode for rmd files"
+        (interactive)
+        (require 'poly-R)
+        (require 'poly-markdown)
+        (R-mode)
+        (poly-markdown+r-mode))
+      ))
+
+  (with-eval-after-load 'rmd-mode
+    (global-set-key (kbd "S-<f7>") 'polymode-previous-chunk)
+    (global-set-key (kbd "S-<f8>") 'polymode-next-chunk)
+    (global-set-key (kbd "S-<f9>") 'polymode-insert-new-chunk))
   )
 
 ;;; packages.el ends here
